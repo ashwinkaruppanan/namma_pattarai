@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Namma Pattarai – Chennai's premier car care center. Car washing, underchasis coating, silencer coating, AC & mechanical work, and all accessories.">
     <title>Namma Pattarai – Premium Car Care in Chennai</title>
+    <link rel="icon" href="assets/logo.png" type="image/png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,20 +45,9 @@
         }
         .nav-link:hover::after { width: 100%; }
 
-        /* ── service card (desktop diagonal split) ── */
-        .svc-card          { display: flex; height: 260px; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.35); }
-        .svc-left          { width: 44%; background: #2D2D2D; display: flex; align-items: center; padding: 2rem 2.5rem;
-                             clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); flex-shrink: 0; z-index: 2; }
-        .svc-right         { flex: 1; background-size: cover; background-position: center; margin-left: -7%; }
-        .svc-divider       { position: absolute; top: 0; bottom: 0; left: 37%; width: 5px; background: #F15A24; transform: skewX(-8deg); z-index: 3; }
-
-        /* mobile stacked service card */
-        @media (max-width: 640px) {
-            .svc-card        { flex-direction: column; height: auto; }
-            .svc-left        { width: 100%; clip-path: none; padding: 1.5rem 1.5rem 1rem; }
-            .svc-right       { margin-left: 0; height: 160px; }
-            .svc-divider     { display: none; }
-        }
+        /* ── service card ── */
+        .svc-img { transition: transform .5s ease; }
+        .svc-wrap:hover .svc-img { transform: scale(1.02); }
 
         /* ── accessory card ── */
         .acc-card { border: 2px solid #F15A24; border-radius: 10px; overflow: hidden; transition: transform .3s, box-shadow .3s; }
@@ -98,21 +88,98 @@
         select.form-input option { background: #2D2D2D; }
 
         /* ── hero diagonal accents ── */
-        .hero-line { position: absolute; top: 0; bottom: 0; width: 4px; background: #F15A24; transform: skewX(8deg); }
+        .hero-line { position: absolute; top: 0; bottom: 0; width: 4px; background: #F15A24; transform: skewX(8deg);
+                     animation: lineFloat 7s ease-in-out infinite; }
+        .hero-line:nth-of-type(2) { animation-delay: -3.5s; }
+        @keyframes lineFloat {
+            0%, 100% { transform: skewX(8deg) translateY(0); }
+            50%       { transform: skewX(8deg) translateY(-18px); }
+        }
+
+        /* ── scroll progress bar ── */
+        #scroll-bar { height: 3px; width: 0; background: #F15A24;
+                      position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+                      transition: width .08s linear; }
+
+        /* ── logo entrance ── */
+        @keyframes logoSlide { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } }
+        .logo-img { animation: logoSlide .65s ease forwards; }
+
+        /* ── button shimmer ── */
+        .btn-shine { position: relative; overflow: hidden; }
+        .btn-shine::after {
+            content: ''; position: absolute; top: 0; left: -120%; width: 55%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+            animation: btnShine 3s ease-in-out infinite;
+        }
+        @keyframes btnShine { to { left: 130%; } }
+
+        /* ── WhatsApp FAB pulse rings ── */
+        .wa-ring {
+            position: absolute; inset: -7px; border-radius: 50%;
+            border: 2px solid rgba(37,211,102,.6);
+            animation: waRing 2.2s ease-out infinite;
+            pointer-events: none;
+        }
+        .wa-ring-2 {
+            position: absolute; inset: -7px; border-radius: 50%;
+            border: 2px solid rgba(37,211,102,.3);
+            animation: waRing 2.2s ease-out infinite .75s;
+            pointer-events: none;
+        }
+        @keyframes waRing {
+            0%   { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        /* ── service card stagger ── */
+        .svc-stagger-1 { transition-delay: 0s !important; }
+        .svc-stagger-2 { transition-delay: .2s !important; }
+        .svc-stagger-3 { transition-delay: .4s !important; }
+        .svc-stagger-4 { transition-delay: .6s !important; }
+
+        /* ── map CTA card ── */
+        .map-cta { transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+        .map-cta:hover { transform: translateY(-4px); border-color: #F15A24 !important;
+                         box-shadow: 0 16px 48px rgba(241,90,36,.22); }
+        .map-pin-pulse {
+            position: absolute; inset: -6px; border-radius: 50%;
+            border: 2px solid rgba(241,90,36,.55);
+            animation: pinPulse 2s ease-out infinite;
+            pointer-events: none;
+        }
+        .map-pin-pulse-2 {
+            position: absolute; inset: -6px; border-radius: 50%;
+            border: 2px solid rgba(241,90,36,.3);
+            animation: pinPulse 2s ease-out infinite .75s;
+            pointer-events: none;
+        }
+        @keyframes pinPulse {
+            from { transform: scale(1); opacity: 1; }
+            to   { transform: scale(2); opacity: 0; }
+        }
+
+        /* ── section header underline draw ── */
+        .pill-draw { width: 0; animation: pillDraw .8s ease forwards; }
+        @keyframes pillDraw { to { width: 56px; } }
+
+        /* ── number counter ── */
+        .stat-val { display: inline-block; }
     </style>
 </head>
 <body class="antialiased bg-white text-gray-900">
+<div id="scroll-bar"></div>
 
 <!-- ═══════════════════════════════════════════════
      NAVBAR
 ════════════════════════════════════════════════ -->
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-dark transition-shadow duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-[90px] md:h-[115px]">
 
         <!-- Logo -->
         <a href="#home" class="flex items-center gap-2">
-            <img src="assets/logo-white.png" alt="Namma Pattarai"
-                 class="h-9 md:h-11 w-auto"
+            <img src="assets/logo.png" alt="Namma Pattarai"
+                 class="logo-img h-[78px] md:h-[100px] w-auto"
                  onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex'">
             <div id="logo-fallback" class="hidden flex-col leading-none">
                 <span class="font-oswald text-brand font-bold text-xl tracking-wide">NAMMA</span>
@@ -131,15 +198,23 @@
 
         <!-- CTA + hamburger -->
         <div class="flex items-center gap-3">
-            <a href="tel:+919876543210"
+            <a href="tel:+919444066634"
                class="hidden md:flex items-center gap-1.5 text-white/80 hover:text-brand transition text-sm font-medium">
                 <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
-                +91 98765 43210
+                +91 94440 66634
+            </a>
+            <a href="https://maps.app.goo.gl/mL7fkNuYW5h7xvhi8" target="_blank" rel="noopener"
+               class="hidden md:flex items-center gap-1.5 btn-shine bg-brand/15 hover:bg-brand border border-brand/50 hover:border-brand text-brand hover:text-white px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Directions
             </a>
             <a href="#contact"
-               class="bg-brand hover:bg-orange-600 text-white px-5 py-2.5 rounded font-oswald font-semibold text-sm uppercase tracking-wider transition-colors">
+               class="btn-shine bg-brand hover:bg-orange-600 text-white px-5 py-2.5 rounded font-oswald font-semibold text-sm uppercase tracking-wider transition-colors">
                 Book Now
             </a>
             <button id="ham-btn" onclick="toggleMenu()" aria-label="Menu"
@@ -159,11 +234,19 @@
             <a href="#accessories" onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Accessories</a>
             <a href="#why-us"      onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Why Us</a>
             <a href="#contact"     onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Contact</a>
-            <a href="tel:+919876543210" class="flex items-center gap-2 text-brand py-2.5 text-sm font-medium">
+            <a href="https://maps.app.goo.gl/mL7fkNuYW5h7xvhi8" target="_blank" rel="noopener"
+               onclick="toggleMenu()" class="flex items-center gap-2 text-white/80 hover:text-brand py-2.5 text-sm font-medium">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Thailavaram, Pin 603203
+            </a>
+            <a href="tel:+919444066634" class="flex items-center gap-2 text-brand py-2.5 text-sm font-medium">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
-                +91 98765 43210
+                +91 94440 66634
             </a>
         </div>
     </div>
@@ -173,11 +256,11 @@
 <!-- ═══════════════════════════════════════════════
      HERO
 ════════════════════════════════════════════════ -->
-<section id="home" class="relative min-h-screen flex items-center bg-dark overflow-hidden pt-16">
+<section id="home" class="relative min-h-screen flex items-center bg-dark overflow-hidden pt-[90px] md:pt-[115px]">
 
     <!-- Background car image (hero) -->
     <div class="absolute inset-0 bg-cover bg-right-bottom opacity-20"
-         style="background-image: url('assets/hero-bg.jpg');"></div>
+         style="background-image: url('assets/hero-bg.jpeg');"></div>
 
     <!-- Gradient: darker on left, fades right -->
     <div class="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/40"></div>
@@ -212,13 +295,13 @@
             <!-- Buttons -->
             <div class="flex flex-wrap gap-4">
                 <a href="#services"
-                   class="inline-flex items-center gap-2 bg-brand hover:bg-orange-600 text-white px-8 py-4 font-oswald font-bold text-lg uppercase tracking-wide rounded transition-colors group">
+                   class="btn-shine inline-flex items-center gap-2 bg-brand hover:bg-orange-600 text-white px-8 py-4 font-oswald font-bold text-lg uppercase tracking-wide rounded transition-colors group">
                     Our Services
                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4-4 4M3 12h18"/>
                     </svg>
                 </a>
-                <a href="tel:+919876543210"
+                <a href="tel:+919444066634"
                    class="inline-flex items-center gap-2 border-2 border-white/70 hover:border-brand text-white hover:text-brand px-8 py-4 font-oswald font-bold text-lg uppercase tracking-wide rounded transition-colors">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
@@ -228,19 +311,19 @@
             </div>
 
             <!-- Stats -->
-            <div class="flex flex-wrap items-center gap-6 md:gap-10 mt-14">
+            <div id="stats-row" class="flex flex-wrap items-center gap-6 md:gap-10 mt-14">
                 <div>
-                    <div class="font-oswald font-bold text-brand text-4xl">500<span class="text-2xl">+</span></div>
+                    <div class="font-oswald font-bold text-brand text-4xl"><span class="stat-val" data-target="500">0</span><span class="text-2xl">+</span></div>
                     <div class="text-gray-500 text-xs uppercase tracking-widest mt-0.5">Happy Customers</div>
                 </div>
                 <div class="w-px h-10 bg-gray-700"></div>
                 <div>
-                    <div class="font-oswald font-bold text-brand text-4xl">10<span class="text-2xl">+</span></div>
+                    <div class="font-oswald font-bold text-brand text-4xl"><span class="stat-val" data-target="10">0</span><span class="text-2xl">+</span></div>
                     <div class="text-gray-500 text-xs uppercase tracking-widest mt-0.5">Expert Technicians</div>
                 </div>
                 <div class="w-px h-10 bg-gray-700"></div>
                 <div>
-                    <div class="font-oswald font-bold text-brand text-4xl">5<span class="text-2xl">+</span></div>
+                    <div class="font-oswald font-bold text-brand text-4xl"><span class="stat-val" data-target="5">0</span><span class="text-2xl">+</span></div>
                     <div class="text-gray-500 text-xs uppercase tracking-widest mt-0.5">Years Experience</div>
                 </div>
             </div>
@@ -278,56 +361,24 @@
         <!-- Cards -->
         <div class="space-y-5 md:space-y-6">
 
-            <!-- Car Washing -->
-            <div class="svc-card relative fade-in">
-                <div class="svc-left">
-                    <div>
-                        <h3 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase leading-tight">CAR</h3>
-                        <h3 class="font-oswald font-bold text-brand  text-4xl md:text-5xl uppercase leading-tight">WASHING</h3>
-                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Interior & exterior deep-clean</p>
-                    </div>
-                </div>
-                <div class="svc-divider"></div>
-                <div class="svc-right" style="background-image: url('assets/services/car-washing.jpg'); background-color: #3a4a5c;"></div>
+            <div class="svc-wrap svc-stagger-1 rounded-2xl overflow-hidden shadow-lg fade-in">
+                <img src="assets/01_car%20washing.png" alt="Car Washing – Interior & exterior deep-clean"
+                     class="svc-img w-full h-auto block" loading="lazy">
             </div>
 
-            <!-- Underchasis Coating -->
-            <div class="svc-card relative fade-in">
-                <div class="svc-left">
-                    <div>
-                        <h3 class="font-oswald font-bold text-brand  text-4xl md:text-5xl uppercase leading-tight">UNDERCHASIS</h3>
-                        <h3 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase leading-tight">COATING</h3>
-                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Rust & corrosion protection</p>
-                    </div>
-                </div>
-                <div class="svc-divider"></div>
-                <div class="svc-right" style="background-image: url('assets/services/underchasis.jpg'); background-color: #2e3a30;"></div>
+            <div class="svc-wrap svc-stagger-2 rounded-2xl overflow-hidden shadow-lg fade-in">
+                <img src="assets/02_UNDER%20CHASSIS%20COATING.png" alt="Underchasis Coating – Rust & corrosion protection"
+                     class="svc-img w-full h-auto block" loading="lazy">
             </div>
 
-            <!-- Silencer Coating -->
-            <div class="svc-card relative fade-in">
-                <div class="svc-left">
-                    <div>
-                        <h3 class="font-oswald font-bold text-brand  text-4xl md:text-5xl uppercase leading-tight">SILENCER</h3>
-                        <h3 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase leading-tight">COATING</h3>
-                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Heat & noise insulation</p>
-                    </div>
-                </div>
-                <div class="svc-divider"></div>
-                <div class="svc-right" style="background-image: url('assets/services/silencer.jpg'); background-color: #1f2535;"></div>
+            <div class="svc-wrap svc-stagger-3 rounded-2xl overflow-hidden shadow-lg fade-in">
+                <img src="assets/03_SILENCER%20COATING.png" alt="Silencer Coating – Heat & noise insulation"
+                     class="svc-img w-full h-auto block" loading="lazy">
             </div>
 
-            <!-- AC, Electrical & Mechanical -->
-            <div class="svc-card relative fade-in">
-                <div class="svc-left">
-                    <div>
-                        <h3 class="font-oswald font-bold text-brand  text-3xl md:text-4xl uppercase leading-tight">AC, ELECTRICAL &</h3>
-                        <h3 class="font-oswald font-bold text-white text-3xl md:text-4xl uppercase leading-tight">MECHANICAL WORK</h3>
-                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Complete diagnostics & repair</p>
-                    </div>
-                </div>
-                <div class="svc-divider"></div>
-                <div class="svc-right" style="background-image: url('assets/services/mechanical.jpg'); background-color: #1e2a40;"></div>
+            <div class="svc-wrap svc-stagger-4 rounded-2xl overflow-hidden shadow-lg fade-in">
+                <img src="assets/04_AC.png" alt="AC, Electrical & Mechanical Work – Complete diagnostics & repair"
+                     class="svc-img w-full h-auto block" loading="lazy">
             </div>
 
         </div>
@@ -345,125 +396,41 @@
     <div class="absolute bottom-10 right-10 w-14 h-14 border-b-[3px] border-r-[3px] border-brand/40 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
 
-            <!-- Left label -->
-            <div class="lg:w-64 shrink-0 fade-in">
-                <div class="h-px w-12 bg-brand mb-6"></div>
-                <h2 class="font-oswald font-bold uppercase leading-none">
-                    <span class="block text-5xl md:text-6xl text-white">ALL</span>
-                    <span class="block text-5xl md:text-6xl text-brand">ACCES-<br>SORIES</span>
-                </h2>
-                <p class="text-gray-500 text-sm leading-relaxed mt-5">
-                    Upgrade your car with premium accessories from trusted brands.
-                </p>
-                <a href="#contact"
-                   class="mt-7 inline-flex items-center gap-2 bg-brand hover:bg-orange-600 text-white px-6 py-3 rounded font-oswald font-semibold uppercase tracking-wide text-sm transition-colors">
-                    Enquire Now
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4-4 4M3 12h18"/>
-                    </svg>
-                </a>
+        <!-- Section header -->
+        <div class="text-center mb-10 fade-in">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="h-px w-10 bg-brand"></div>
+                <span class="text-brand text-xs font-semibold tracking-widest uppercase">What We Offer</span>
+                <div class="h-px w-10 bg-brand"></div>
             </div>
-
-            <!-- Grid -->
-            <div class="flex-1">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-
-                    <!-- Sound Systems -->
-                    <div class="acc-card bg-dark fade-in">
-                        <div class="h-40 bg-gray-700 overflow-hidden relative">
-                            <img src="assets/accessories/sound.jpg" alt="Audiophile Sound Systems"
-                                 class="w-full h-full object-cover opacity-80"
-                                 onerror="this.parentElement.style.background='#3a3f4a'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
-                                AUDIOPHILE<br><span class="text-brand">SOUND SYSTEMS</span>
-                            </h4>
-                        </div>
-                    </div>
-
-                    <!-- Seat Covers -->
-                    <div class="acc-card bg-dark fade-in">
-                        <div class="h-40 bg-gray-700 overflow-hidden relative">
-                            <img src="assets/accessories/seats.jpg" alt="Premium Seat Covers"
-                                 class="w-full h-full object-cover opacity-80"
-                                 onerror="this.parentElement.style.background='#3a3040'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
-                                PREMIUM<br><span class="text-brand">SEAT COVERS</span>
-                            </h4>
-                        </div>
-                    </div>
-
-                    <!-- LED Headlights -->
-                    <div class="acc-card bg-dark fade-in">
-                        <div class="h-40 bg-gray-700 overflow-hidden relative">
-                            <img src="assets/accessories/lights.jpg" alt="LED Headlights & Lighting"
-                                 class="w-full h-full object-cover opacity-80"
-                                 onerror="this.parentElement.style.background='#1a2535'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
-                                LED HEADLIGHTS<br><span class="text-brand">& LIGHTING</span>
-                            </h4>
-                        </div>
-                    </div>
-
-                    <!-- Floor Mats -->
-                    <div class="acc-card bg-dark fade-in">
-                        <div class="h-40 bg-gray-700 overflow-hidden relative">
-                            <img src="assets/accessories/mats.jpg" alt="Luxury Floor Mats"
-                                 class="w-full h-full object-cover opacity-80"
-                                 onerror="this.parentElement.style.background='#2a1a1a'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
-                                LUXURY<br><span class="text-brand">FLOOR MATS</span>
-                            </h4>
-                        </div>
-                    </div>
-
-                    <!-- Sun Control Film -->
-                    <div class="acc-card bg-dark fade-in">
-                        <div class="h-40 bg-gray-700 overflow-hidden relative">
-                            <img src="assets/accessories/sunfilm.jpg" alt="Sun Control Film Works"
-                                 class="w-full h-full object-cover opacity-80"
-                                 onerror="this.parentElement.style.background='#0f1a20'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
-                                PROFESSIONAL<br><span class="text-brand">SUN CONTROL FILM</span>
-                            </h4>
-                        </div>
-                    </div>
-
-                    <!-- Remote Locking -->
-                    <div class="acc-card bg-dark fade-in">
-                        <div class="h-40 bg-gray-700 overflow-hidden relative">
-                            <img src="assets/accessories/remote.jpg" alt="Remote Locking Systems"
-                                 class="w-full h-full object-cover opacity-80"
-                                 onerror="this.parentElement.style.background='#1a2030'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
-                                REMOTE<br><span class="text-brand">LOCKING SYSTEMS</span>
-                            </h4>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+            <h2 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase">
+                All <span class="text-brand">Accessories</span>
+            </h2>
+            <div class="pill"></div>
         </div>
+
+        <!-- Accessories banner -->
+        <div class="fade-in">
+            <img src="assets/05_accessories.png"
+                 alt="All Accessories – Sound Systems, Seat Covers, LED Lighting, Floor Mats, Sun Film, Remote Locking"
+                 class="w-full rounded-2xl shadow-2xl" loading="lazy">
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-10 fade-in">
+            <p class="text-gray-400 text-sm mb-7 max-w-lg mx-auto">
+                Upgrade your car with premium accessories from trusted brands — fitted by experts at Namma Pattarai.
+            </p>
+            <a href="#contact"
+               class="inline-flex items-center gap-2 bg-brand hover:bg-orange-600 text-white px-8 py-4 rounded font-oswald font-bold uppercase tracking-wide text-base transition-colors">
+                Enquire Now
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4-4 4M3 12h18"/>
+                </svg>
+            </a>
+        </div>
+
     </div>
 </section>
 
@@ -700,58 +667,76 @@
                     Ready to give your car the care it deserves? Reach out to book a service or enquire about accessories.
                 </p>
 
-                <div class="space-y-6">
+                <div class="space-y-4">
 
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brand rounded-lg flex items-center justify-center shrink-0">
+                    <!-- Phone -->
+                    <a href="tel:+919444066634" class="contact-card flex items-center gap-4 bg-darker border border-gray-800 rounded-2xl p-5 group">
+                        <div class="w-12 h-12 bg-brand rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="font-semibold text-dark text-sm mb-0.5">Phone</div>
-                            <a href="tel:+919876543210" class="text-gray-500 hover:text-brand transition text-sm">+91 98765 43210</a>
+                            <div class="font-oswald font-bold text-white text-sm uppercase mb-1">Phone</div>
+                            <div class="text-gray-400 text-xs">+91 94440 66634 · +91 98404 42673</div>
+                            <div class="text-gray-400 text-xs">+91 95008 40792</div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-[#25D366] rounded-lg flex items-center justify-center shrink-0">
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/919444066634" target="_blank" rel="noopener" class="contact-card flex items-center gap-4 bg-darker border border-gray-800 rounded-2xl p-5 group">
+                        <div class="w-12 h-12 bg-[#25D366] rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="font-semibold text-dark text-sm mb-0.5">WhatsApp</div>
-                            <a href="https://wa.me/919876543210" class="text-gray-500 hover:text-brand transition text-sm">+91 98765 43210</a>
+                            <div class="font-oswald font-bold text-white text-sm uppercase mb-1">WhatsApp</div>
+                            <div class="text-gray-400 text-xs">+91 94440 66634</div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brand rounded-lg flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
+                    <!-- Map CTA Card -->
+                    <a href="https://maps.app.goo.gl/mL7fkNuYW5h7xvhi8" target="_blank" rel="noopener"
+                       class="map-cta flex items-center gap-4 bg-darker border border-brand/25 rounded-2xl p-5 group cursor-pointer fade-in">
+                        <div class="relative shrink-0 w-12 h-12">
+                            <div class="w-12 h-12 bg-brand rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
                         </div>
-                        <div>
-                            <div class="font-semibold text-dark text-sm mb-0.5">Location</div>
-                            <div class="text-gray-500 text-sm">Chennai, Tamil Nadu</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-oswald font-bold text-white text-sm uppercase mb-1">Get Directions</div>
+                            <div class="text-gray-400 text-xs leading-relaxed">
+                                Plot no 5, Adiparasakthi Nagar, Thailavaram<br>
+                                Behind Annamalai Complex · Pin 603203
+                            </div>
+                            <div class="flex items-center gap-1.5 text-brand text-xs font-semibold mt-1.5 group-hover:gap-3 transition-all duration-300">
+                                <span>Open in Google Maps</span>
+                                <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4-4 4M3 12h18"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brand rounded-lg flex items-center justify-center shrink-0">
+                    <!-- Working Hours -->
+                    <div class="contact-card flex items-center gap-4 bg-darker border border-gray-800 rounded-2xl p-5">
+                        <div class="w-12 h-12 bg-brand rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
                         <div>
-                            <div class="font-semibold text-dark text-sm mb-0.5">Working Hours</div>
-                            <div class="text-gray-500 text-sm">Mon – Sat: 9:00 AM – 7:00 PM</div>
-                            <div class="text-gray-500 text-sm">Sunday: 10:00 AM – 4:00 PM</div>
+                            <div class="font-oswald font-bold text-white text-sm uppercase mb-1">Working Hours</div>
+                            <div class="text-gray-400 text-xs">Mon – Sat: 9:00 AM – 7:00 PM</div>
+                            <div class="text-gray-400 text-xs">Sunday: 10:00 AM – 4:00 PM</div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -790,8 +775,11 @@
                         <textarea name="message" rows="3" placeholder="Any additional details..." class="form-input resize-none"></textarea>
                     </div>
                     <button id="submit-btn" type="submit"
-                            class="w-full bg-brand hover:bg-orange-600 text-white font-oswald font-bold text-lg uppercase tracking-wide py-4 rounded-lg transition-colors">
-                        Submit Enquiry
+                            class="w-full bg-[#25D366] hover:bg-green-600 text-white font-oswald font-bold text-lg uppercase tracking-wide py-4 rounded-lg transition-colors flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Book via WhatsApp
                     </button>
                 </form>
             </div>
@@ -812,8 +800,8 @@
             <!-- Brand -->
             <div class="lg:col-span-2">
                 <a href="#home" class="inline-flex items-center gap-3 mb-5">
-                    <img src="assets/logo-white.png" alt="Namma Pattarai"
-                         class="h-12 w-auto"
+                    <img src="assets/logo.png" alt="Namma Pattarai"
+                         class="h-16 w-auto"
                          onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='flex'">
                     <div id="footer-logo-fallback" class="hidden flex-col leading-none">
                         <span class="font-oswald text-brand font-bold text-2xl tracking-wide">NAMMA</span>
@@ -837,7 +825,7 @@
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                         </svg>
                     </a>
-                    <a href="https://wa.me/919876543210" aria-label="WhatsApp"
+                    <a href="https://wa.me/919444066634" aria-label="WhatsApp"
                        class="w-9 h-9 bg-gray-800 hover:bg-[#25D366] rounded-full flex items-center justify-center transition-colors">
                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -882,8 +870,10 @@
 
 
 <!-- WhatsApp FAB -->
-<a href="https://wa.me/919876543210" class="wa-fab" aria-label="Chat on WhatsApp" title="WhatsApp us">
-    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+<a href="https://wa.me/919444066634" class="wa-fab" aria-label="Chat on WhatsApp" title="WhatsApp us">
+    <div class="wa-ring"></div>
+    <div class="wa-ring-2"></div>
+    <svg class="w-7 h-7 text-white relative z-10" fill="currentColor" viewBox="0 0 24 24">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
 </a>
@@ -917,38 +907,80 @@
         }
     });
 
-    /* ── navbar shadow on scroll ── */
+    /* ── scroll progress + navbar shadow ── */
     window.addEventListener('scroll', () => {
+        const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+        document.getElementById('scroll-bar').style.width = Math.min(pct, 100) + '%';
         document.getElementById('navbar').style.boxShadow =
             window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,.5)' : 'none';
-    });
+    }, { passive: true });
 
-    /* ── scroll animations ── */
+    /* ── hero parallax ── */
+    const heroBg = document.querySelector('#home > .absolute');
+    if (heroBg) {
+        window.addEventListener('scroll', () => {
+            heroBg.style.transform = `translateY(${window.scrollY * 0.22}px)`;
+        }, { passive: true });
+    }
+
+    /* ── counter animation ── */
+    function countUp(el, target, duration) {
+        const startTime = performance.now();
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+        (function tick(now) {
+            const p = Math.min((now - startTime) / duration, 1);
+            el.textContent = Math.round(easeOut(p) * target);
+            if (p < 1) requestAnimationFrame(tick);
+        })(startTime);
+    }
+
+    /* ── scroll animations + stat counter trigger ── */
+    let statsCounted = false;
     const observer = new IntersectionObserver(
-        (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+        (entries) => entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('visible');
+            if (!statsCounted && e.target.closest('#stats-row')) {
+                statsCounted = true;
+                document.querySelectorAll('.stat-val').forEach(el => {
+                    countUp(el, parseInt(el.dataset.target), 1800);
+                });
+            }
+        }),
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
     );
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    const statsRow = document.getElementById('stats-row');
+    if (statsRow) observer.observe(statsRow);
 
-    /* ── form submission ── */
+    /* ── form submission → WhatsApp ── */
     function submitForm(e) {
         e.preventDefault();
-        const btn = document.getElementById('submit-btn');
-        btn.textContent = 'Sending…';
-        btn.disabled    = true;
-        btn.classList.replace('bg-brand', 'bg-gray-600');
+        const form    = document.getElementById('booking-form');
+        const name    = form.name.value.trim();
+        const phone   = form.phone.value.trim();
+        const service = form.service.value;
+        const car     = form.car.value.trim();
+        const msg     = form.message.value.trim();
 
-        /* Replace this timeout with a real fetch() to your backend/WhatsApp API */
-        setTimeout(() => {
-            btn.textContent = '✓ We\'ll contact you shortly!';
-            btn.classList.replace('bg-gray-600', 'bg-green-600');
-            document.getElementById('booking-form').reset();
-            setTimeout(() => {
-                btn.textContent = 'Submit Enquiry';
-                btn.classList.replace('bg-green-600', 'bg-brand');
-                btn.disabled = false;
-            }, 3500);
-        }, 1200);
+        const serviceLabels = {
+            'car-washing':   'Car Washing',
+            'underchasis':   'Underchasis Coating',
+            'silencer':      'Silencer Coating',
+            'ac-electrical': 'AC, Electrical & Mechanical',
+            'accessories':   'Accessories',
+            'other':         'Other'
+        };
+
+        let text = `Hi Namma Pattarai! 👋\n\nI'd like to book a service.\n\n`;
+        text += `*Name:* ${name}\n`;
+        text += `*Phone:* ${phone}\n`;
+        text += `*Service:* ${serviceLabels[service] || service}\n`;
+        if (car)  text += `*Car Model:* ${car}\n`;
+        if (msg)  text += `*Message:* ${msg}\n`;
+
+        window.open(`https://wa.me/919444066634?text=${encodeURIComponent(text)}`, '_blank');
+        form.reset();
     }
 </script>
 </body>
