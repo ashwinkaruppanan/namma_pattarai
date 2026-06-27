@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Namma Pattarai – Chennai's premier car care center. Car washing, underchasis coating, silencer coating, AC & mechanical work, and all accessories.">
+    <title>Namma Pattarai – Premium Car Care in Chennai</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#F15A24',
+                        dark:  '#2D2D2D',
+                        darker:'#1A1A1A',
+                    },
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        inter:  ['Inter',  'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+
+        /* ── nav underline hover ── */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: #F15A24;
+            transition: width .3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── service card (desktop diagonal split) ── */
+        .svc-card          { display: flex; height: 260px; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.35); }
+        .svc-left          { width: 44%; background: #2D2D2D; display: flex; align-items: center; padding: 2rem 2.5rem;
+                             clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); flex-shrink: 0; z-index: 2; }
+        .svc-right         { flex: 1; background-size: cover; background-position: center; margin-left: -7%; }
+        .svc-divider       { position: absolute; top: 0; bottom: 0; left: 37%; width: 5px; background: #F15A24; transform: skewX(-8deg); z-index: 3; }
+
+        /* mobile stacked service card */
+        @media (max-width: 640px) {
+            .svc-card        { flex-direction: column; height: auto; }
+            .svc-left        { width: 100%; clip-path: none; padding: 1.5rem 1.5rem 1rem; }
+            .svc-right       { margin-left: 0; height: 160px; }
+            .svc-divider     { display: none; }
+        }
+
+        /* ── accessory card ── */
+        .acc-card { border: 2px solid #F15A24; border-radius: 10px; overflow: hidden; transition: transform .3s, box-shadow .3s; }
+        .acc-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(241,90,36,.3); }
+
+        /* ── feature card ── */
+        .feat-card { transition: transform .3s, box-shadow .3s; }
+        .feat-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(0,0,0,.10); }
+
+        /* ── orange pill divider ── */
+        .pill { width: 56px; height: 4px; background: #F15A24; margin: 14px auto 0; border-radius: 2px; }
+
+        /* ── step circle ── */
+        .step-num { width: 72px; height: 72px; border-radius: 50%; background: #F15A24; display: flex; align-items: center; justify-content: center;
+                    font-family: 'Oswald', sans-serif; font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0 auto 1rem; position: relative; z-index: 2; }
+
+        /* ── scroll fade-in ── */
+        .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #F15A24; border-radius: 3px; }
+
+        /* ── WhatsApp fab ── */
+        .wa-fab { position: fixed; bottom: 24px; right: 24px; z-index: 999;
+                  width: 56px; height: 56px; background: #25D366; border-radius: 50%;
+                  display: flex; align-items: center; justify-content: center;
+                  box-shadow: 0 4px 20px rgba(37,211,102,.55); transition: transform .3s; }
+        .wa-fab:hover { transform: scale(1.1); }
+
+        /* ── form inputs ── */
+        .form-input { width: 100%; background: #1A1A1A; border: 1px solid #404040; color: #fff;
+                      border-radius: 8px; padding: .75rem 1rem; font-size: .875rem; transition: border-color .2s; }
+        .form-input:focus { outline: none; border-color: #F15A24; }
+        .form-input::placeholder { color: #6b7280; }
+        select.form-input option { background: #2D2D2D; }
+
+        /* ── hero diagonal accents ── */
+        .hero-line { position: absolute; top: 0; bottom: 0; width: 4px; background: #F15A24; transform: skewX(8deg); }
+    </style>
+</head>
+<body class="antialiased bg-white text-gray-900">
+
+<!-- ═══════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-dark transition-shadow duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
+
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-2">
+            <img src="assets/logo-white.png" alt="Namma Pattarai"
+                 class="h-9 md:h-11 w-auto"
+                 onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex'">
+            <div id="logo-fallback" class="hidden flex-col leading-none">
+                <span class="font-oswald text-brand font-bold text-xl tracking-wide">NAMMA</span>
+                <span class="font-oswald text-white font-bold text-xl tracking-wide">PATTARAI</span>
+            </div>
+        </a>
+
+        <!-- Desktop links -->
+        <div class="hidden md:flex items-center gap-7">
+            <a href="#home"        class="nav-link text-white hover:text-brand transition text-sm font-medium tracking-wide uppercase">Home</a>
+            <a href="#services"    class="nav-link text-white hover:text-brand transition text-sm font-medium tracking-wide uppercase">Services</a>
+            <a href="#accessories" class="nav-link text-white hover:text-brand transition text-sm font-medium tracking-wide uppercase">Accessories</a>
+            <a href="#why-us"      class="nav-link text-white hover:text-brand transition text-sm font-medium tracking-wide uppercase">Why Us</a>
+            <a href="#contact"     class="nav-link text-white hover:text-brand transition text-sm font-medium tracking-wide uppercase">Contact</a>
+        </div>
+
+        <!-- CTA + hamburger -->
+        <div class="flex items-center gap-3">
+            <a href="tel:+919876543210"
+               class="hidden md:flex items-center gap-1.5 text-white/80 hover:text-brand transition text-sm font-medium">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                +91 98765 43210
+            </a>
+            <a href="#contact"
+               class="bg-brand hover:bg-orange-600 text-white px-5 py-2.5 rounded font-oswald font-semibold text-sm uppercase tracking-wider transition-colors">
+                Book Now
+            </a>
+            <button id="ham-btn" onclick="toggleMenu()" aria-label="Menu"
+                    class="md:hidden flex flex-col gap-1.5 p-2">
+                <span id="hb1" class="block w-6 h-0.5 bg-white transition-all origin-center"></span>
+                <span id="hb2" class="block w-6 h-0.5 bg-white transition-all"></span>
+                <span id="hb3" class="block w-6 h-0.5 bg-white transition-all origin-center"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-darker border-t border-gray-800">
+        <div class="px-4 py-4 space-y-1">
+            <a href="#home"        onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Home</a>
+            <a href="#services"    onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Services</a>
+            <a href="#accessories" onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Accessories</a>
+            <a href="#why-us"      onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Why Us</a>
+            <a href="#contact"     onclick="toggleMenu()" class="block text-white hover:text-brand py-2.5 text-sm font-medium uppercase tracking-wide">Contact</a>
+            <a href="tel:+919876543210" class="flex items-center gap-2 text-brand py-2.5 text-sm font-medium">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                +91 98765 43210
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<section id="home" class="relative min-h-screen flex items-center bg-dark overflow-hidden pt-16">
+
+    <!-- Background car image (hero) -->
+    <div class="absolute inset-0 bg-cover bg-right-bottom opacity-20"
+         style="background-image: url('assets/hero-bg.jpg');"></div>
+
+    <!-- Gradient: darker on left, fades right -->
+    <div class="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/40"></div>
+
+    <!-- Diagonal accent lines (right side) -->
+    <div class="absolute right-20 top-0 bottom-0 hero-line opacity-50" style="right:5rem"></div>
+    <div class="absolute right-20 top-0 bottom-0 hero-line opacity-20" style="right:7rem; width:2px"></div>
+
+    <!-- Content -->
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-28 md:py-36 w-full">
+        <div class="max-w-3xl">
+
+            <!-- Eye-brow -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px w-12 bg-brand"></div>
+                <span class="text-brand font-oswald font-medium tracking-widest uppercase text-base">Chennai's Premier Car Care</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-oswald font-bold text-white uppercase leading-none mb-7">
+                <span class="block text-5xl md:text-7xl">YOUR CAR</span>
+                <span class="block text-5xl md:text-7xl text-brand">DESERVES</span>
+                <span class="block text-5xl md:text-7xl">THE BEST</span>
+            </h1>
+
+            <!-- Sub-text -->
+            <p class="text-gray-300 text-base md:text-lg leading-relaxed max-w-xl mb-10">
+                Professional washing, protective coatings, mechanical repairs and premium
+                accessories — all under one roof at <strong class="text-white">Namma Pattarai</strong>.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-wrap gap-4">
+                <a href="#services"
+                   class="inline-flex items-center gap-2 bg-brand hover:bg-orange-600 text-white px-8 py-4 font-oswald font-bold text-lg uppercase tracking-wide rounded transition-colors group">
+                    Our Services
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4-4 4M3 12h18"/>
+                    </svg>
+                </a>
+                <a href="tel:+919876543210"
+                   class="inline-flex items-center gap-2 border-2 border-white/70 hover:border-brand text-white hover:text-brand px-8 py-4 font-oswald font-bold text-lg uppercase tracking-wide rounded transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    Call Now
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex flex-wrap items-center gap-6 md:gap-10 mt-14">
+                <div>
+                    <div class="font-oswald font-bold text-brand text-4xl">500<span class="text-2xl">+</span></div>
+                    <div class="text-gray-500 text-xs uppercase tracking-widest mt-0.5">Happy Customers</div>
+                </div>
+                <div class="w-px h-10 bg-gray-700"></div>
+                <div>
+                    <div class="font-oswald font-bold text-brand text-4xl">10<span class="text-2xl">+</span></div>
+                    <div class="text-gray-500 text-xs uppercase tracking-widest mt-0.5">Expert Technicians</div>
+                </div>
+                <div class="w-px h-10 bg-gray-700"></div>
+                <div>
+                    <div class="font-oswald font-bold text-brand text-4xl">5<span class="text-2xl">+</span></div>
+                    <div class="text-gray-500 text-xs uppercase tracking-widest mt-0.5">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
+        <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1.5">
+            <div class="w-1 h-3 bg-brand rounded-full animate-pulse"></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SERVICES
+════════════════════════════════════════════════ -->
+<section id="services" class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <!-- Section header -->
+        <div class="text-center mb-14 fade-in">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="h-px w-10 bg-brand"></div>
+                <span class="text-brand text-xs font-semibold tracking-widest uppercase">What We Do</span>
+                <div class="h-px w-10 bg-brand"></div>
+            </div>
+            <h2 class="font-oswald font-bold text-dark text-4xl md:text-5xl uppercase">
+                Our <span class="text-brand">Services</span>
+            </h2>
+            <div class="pill"></div>
+        </div>
+
+        <!-- Cards -->
+        <div class="space-y-5 md:space-y-6">
+
+            <!-- Car Washing -->
+            <div class="svc-card relative fade-in">
+                <div class="svc-left">
+                    <div>
+                        <h3 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase leading-tight">CAR</h3>
+                        <h3 class="font-oswald font-bold text-brand  text-4xl md:text-5xl uppercase leading-tight">WASHING</h3>
+                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Interior & exterior deep-clean</p>
+                    </div>
+                </div>
+                <div class="svc-divider"></div>
+                <div class="svc-right" style="background-image: url('assets/services/car-washing.jpg'); background-color: #3a4a5c;"></div>
+            </div>
+
+            <!-- Underchasis Coating -->
+            <div class="svc-card relative fade-in">
+                <div class="svc-left">
+                    <div>
+                        <h3 class="font-oswald font-bold text-brand  text-4xl md:text-5xl uppercase leading-tight">UNDERCHASIS</h3>
+                        <h3 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase leading-tight">COATING</h3>
+                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Rust & corrosion protection</p>
+                    </div>
+                </div>
+                <div class="svc-divider"></div>
+                <div class="svc-right" style="background-image: url('assets/services/underchasis.jpg'); background-color: #2e3a30;"></div>
+            </div>
+
+            <!-- Silencer Coating -->
+            <div class="svc-card relative fade-in">
+                <div class="svc-left">
+                    <div>
+                        <h3 class="font-oswald font-bold text-brand  text-4xl md:text-5xl uppercase leading-tight">SILENCER</h3>
+                        <h3 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase leading-tight">COATING</h3>
+                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Heat & noise insulation</p>
+                    </div>
+                </div>
+                <div class="svc-divider"></div>
+                <div class="svc-right" style="background-image: url('assets/services/silencer.jpg'); background-color: #1f2535;"></div>
+            </div>
+
+            <!-- AC, Electrical & Mechanical -->
+            <div class="svc-card relative fade-in">
+                <div class="svc-left">
+                    <div>
+                        <h3 class="font-oswald font-bold text-brand  text-3xl md:text-4xl uppercase leading-tight">AC, ELECTRICAL &</h3>
+                        <h3 class="font-oswald font-bold text-white text-3xl md:text-4xl uppercase leading-tight">MECHANICAL WORK</h3>
+                        <p class="text-gray-400 text-sm mt-3 hidden md:block">Complete diagnostics & repair</p>
+                    </div>
+                </div>
+                <div class="svc-divider"></div>
+                <div class="svc-right" style="background-image: url('assets/services/mechanical.jpg'); background-color: #1e2a40;"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     ACCESSORIES
+════════════════════════════════════════════════ -->
+<section id="accessories" class="py-20 md:py-28 bg-darker relative overflow-hidden">
+
+    <!-- Corner accents -->
+    <div class="absolute top-10 left-10 w-14 h-14 border-t-[3px] border-l-[3px] border-brand/40 pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-14 h-14 border-b-[3px] border-r-[3px] border-brand/40 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+
+            <!-- Left label -->
+            <div class="lg:w-64 shrink-0 fade-in">
+                <div class="h-px w-12 bg-brand mb-6"></div>
+                <h2 class="font-oswald font-bold uppercase leading-none">
+                    <span class="block text-5xl md:text-6xl text-white">ALL</span>
+                    <span class="block text-5xl md:text-6xl text-brand">ACCES-<br>SORIES</span>
+                </h2>
+                <p class="text-gray-500 text-sm leading-relaxed mt-5">
+                    Upgrade your car with premium accessories from trusted brands.
+                </p>
+                <a href="#contact"
+                   class="mt-7 inline-flex items-center gap-2 bg-brand hover:bg-orange-600 text-white px-6 py-3 rounded font-oswald font-semibold uppercase tracking-wide text-sm transition-colors">
+                    Enquire Now
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4-4 4M3 12h18"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Grid -->
+            <div class="flex-1">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+                    <!-- Sound Systems -->
+                    <div class="acc-card bg-dark fade-in">
+                        <div class="h-40 bg-gray-700 overflow-hidden relative">
+                            <img src="assets/accessories/sound.jpg" alt="Audiophile Sound Systems"
+                                 class="w-full h-full object-cover opacity-80"
+                                 onerror="this.parentElement.style.background='#3a3f4a'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
+                                AUDIOPHILE<br><span class="text-brand">SOUND SYSTEMS</span>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- Seat Covers -->
+                    <div class="acc-card bg-dark fade-in">
+                        <div class="h-40 bg-gray-700 overflow-hidden relative">
+                            <img src="assets/accessories/seats.jpg" alt="Premium Seat Covers"
+                                 class="w-full h-full object-cover opacity-80"
+                                 onerror="this.parentElement.style.background='#3a3040'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
+                                PREMIUM<br><span class="text-brand">SEAT COVERS</span>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- LED Headlights -->
+                    <div class="acc-card bg-dark fade-in">
+                        <div class="h-40 bg-gray-700 overflow-hidden relative">
+                            <img src="assets/accessories/lights.jpg" alt="LED Headlights & Lighting"
+                                 class="w-full h-full object-cover opacity-80"
+                                 onerror="this.parentElement.style.background='#1a2535'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
+                                LED HEADLIGHTS<br><span class="text-brand">& LIGHTING</span>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- Floor Mats -->
+                    <div class="acc-card bg-dark fade-in">
+                        <div class="h-40 bg-gray-700 overflow-hidden relative">
+                            <img src="assets/accessories/mats.jpg" alt="Luxury Floor Mats"
+                                 class="w-full h-full object-cover opacity-80"
+                                 onerror="this.parentElement.style.background='#2a1a1a'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
+                                LUXURY<br><span class="text-brand">FLOOR MATS</span>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- Sun Control Film -->
+                    <div class="acc-card bg-dark fade-in">
+                        <div class="h-40 bg-gray-700 overflow-hidden relative">
+                            <img src="assets/accessories/sunfilm.jpg" alt="Sun Control Film Works"
+                                 class="w-full h-full object-cover opacity-80"
+                                 onerror="this.parentElement.style.background='#0f1a20'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
+                                PROFESSIONAL<br><span class="text-brand">SUN CONTROL FILM</span>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <!-- Remote Locking -->
+                    <div class="acc-card bg-dark fade-in">
+                        <div class="h-40 bg-gray-700 overflow-hidden relative">
+                            <img src="assets/accessories/remote.jpg" alt="Remote Locking Systems"
+                                 class="w-full h-full object-cover opacity-80"
+                                 onerror="this.parentElement.style.background='#1a2030'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-oswald font-bold text-white text-base uppercase leading-tight">
+                                REMOTE<br><span class="text-brand">LOCKING SYSTEMS</span>
+                            </h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     WHY CHOOSE US
+════════════════════════════════════════════════ -->
+<section id="why-us" class="py-20 md:py-28 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <!-- Header -->
+        <div class="text-center mb-14 fade-in">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="h-px w-10 bg-brand"></div>
+                <span class="text-brand text-xs font-semibold tracking-widest uppercase">Our Promise</span>
+                <div class="h-px w-10 bg-brand"></div>
+            </div>
+            <h2 class="font-oswald font-bold text-dark text-4xl md:text-5xl uppercase">
+                Why Choose <span class="text-brand">Namma Pattarai</span>
+            </h2>
+            <div class="pill"></div>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="feat-card bg-white rounded-xl p-7 text-center shadow border border-gray-100 fade-in">
+                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <h3 class="font-oswald font-bold text-dark text-xl uppercase mb-3">Certified Experts</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Trained technicians with years of hands-on car care experience.</p>
+            </div>
+
+            <div class="feat-card bg-white rounded-xl p-7 text-center shadow border border-gray-100 fade-in">
+                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-oswald font-bold text-dark text-xl uppercase mb-3">Transparent Pricing</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">No hidden charges. Honest, upfront pricing on every service.</p>
+            </div>
+
+            <div class="feat-card bg-white rounded-xl p-7 text-center shadow border border-gray-100 fade-in">
+                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3 class="font-oswald font-bold text-dark text-xl uppercase mb-3">Quick Turnaround</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">We value your time. Fast service without compromising quality.</p>
+            </div>
+
+            <div class="feat-card bg-white rounded-xl p-7 text-center shadow border border-gray-100 fade-in">
+                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                </div>
+                <h3 class="font-oswald font-bold text-dark text-xl uppercase mb-3">Quality Products</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Only genuine, premium products and materials on every job.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════ -->
+<section class="py-20 md:py-28 bg-dark relative overflow-hidden">
+    <!-- Subtle diagonal pattern -->
+    <div class="absolute inset-0 opacity-[0.04]"
+         style="background-image: repeating-linear-gradient(45deg,#F15A24 0,#F15A24 1px,transparent 0,transparent 50%); background-size: 22px 22px;"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+
+        <!-- Header -->
+        <div class="text-center mb-14 fade-in">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="h-px w-10 bg-brand"></div>
+                <span class="text-brand text-xs font-semibold tracking-widest uppercase">The Process</span>
+                <div class="h-px w-10 bg-brand"></div>
+            </div>
+            <h2 class="font-oswald font-bold text-white text-4xl md:text-5xl uppercase">
+                How It <span class="text-brand">Works</span>
+            </h2>
+            <div class="pill"></div>
+        </div>
+
+        <!-- Steps -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 relative">
+            <!-- Connector (desktop only) -->
+            <div class="hidden md:block absolute top-9 left-[calc(33%-2rem)] right-[calc(33%-2rem)] h-px bg-brand/30"></div>
+
+            <div class="text-center fade-in relative z-10">
+                <div class="step-num">01</div>
+                <h3 class="font-oswald font-bold text-white text-2xl uppercase mb-3">Book a Service</h3>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
+                    Call, WhatsApp or fill in the booking form to schedule your appointment.
+                </p>
+            </div>
+
+            <div class="text-center fade-in relative z-10">
+                <div class="step-num">02</div>
+                <h3 class="font-oswald font-bold text-white text-2xl uppercase mb-3">Drop Your Car</h3>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
+                    Bring your vehicle to our center. Our experts assess and get straight to work.
+                </p>
+            </div>
+
+            <div class="text-center fade-in relative z-10">
+                <div class="step-num">03</div>
+                <h3 class="font-oswald font-bold text-white text-2xl uppercase mb-3">Drive Away Happy</h3>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
+                    Collect your freshly serviced car with our quality-guaranteed finish.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════ -->
+<section class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <!-- Header -->
+        <div class="text-center mb-14 fade-in">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="h-px w-10 bg-brand"></div>
+                <span class="text-brand text-xs font-semibold tracking-widest uppercase">Reviews</span>
+                <div class="h-px w-10 bg-brand"></div>
+            </div>
+            <h2 class="font-oswald font-bold text-dark text-4xl md:text-5xl uppercase">
+                What Our <span class="text-brand">Customers Say</span>
+            </h2>
+            <div class="pill"></div>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="bg-gray-50 rounded-xl p-7 border border-gray-100 shadow-sm fade-in">
+                <!-- Stars -->
+                <div class="flex gap-0.5 mb-4">
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed italic mb-6">
+                    "My car looks brand new! Excellent car wash and underchasis coating. Team is very professional and the pricing is genuinely fair."
+                </p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-brand flex items-center justify-center font-oswald font-bold text-white shrink-0">R</div>
+                    <div>
+                        <div class="font-semibold text-dark text-sm">Rajesh Kumar</div>
+                        <div class="text-gray-400 text-xs">Adyar, Chennai</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-7 border border-gray-100 shadow-sm fade-in">
+                <div class="flex gap-0.5 mb-4">
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed italic mb-6">
+                    "Got premium seat covers and sun control film fitted — perfect finish! Highly recommend Namma Pattarai for all accessories."
+                </p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-brand flex items-center justify-center font-oswald font-bold text-white shrink-0">P</div>
+                    <div>
+                        <div class="font-semibold text-dark text-sm">Priya Subramanian</div>
+                        <div class="text-gray-400 text-xs">Anna Nagar, Chennai</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-7 border border-gray-100 shadow-sm fade-in">
+                <div class="flex gap-0.5 mb-4">
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed italic mb-6">
+                    "AC repair and silencer coating done perfectly. The team explained every step. Great work — will definitely be a regular customer!"
+                </p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-brand flex items-center justify-center font-oswald font-bold text-white shrink-0">M</div>
+                    <div>
+                        <div class="font-semibold text-dark text-sm">Muthu Krishnan</div>
+                        <div class="text-gray-400 text-xs">T. Nagar, Chennai</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CONTACT / BOOKING
+════════════════════════════════════════════════ -->
+<section id="contact" class="py-20 md:py-28 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+
+            <!-- Left: Info -->
+            <div class="fade-in">
+                <div class="h-px w-12 bg-brand mb-6"></div>
+                <h2 class="font-oswald font-bold text-dark text-4xl md:text-5xl uppercase mb-5">
+                    Get In <span class="text-brand">Touch</span>
+                </h2>
+                <p class="text-gray-500 leading-relaxed mb-10 max-w-sm">
+                    Ready to give your car the care it deserves? Reach out to book a service or enquire about accessories.
+                </p>
+
+                <div class="space-y-6">
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-brand rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dark text-sm mb-0.5">Phone</div>
+                            <a href="tel:+919876543210" class="text-gray-500 hover:text-brand transition text-sm">+91 98765 43210</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-[#25D366] rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dark text-sm mb-0.5">WhatsApp</div>
+                            <a href="https://wa.me/919876543210" class="text-gray-500 hover:text-brand transition text-sm">+91 98765 43210</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-brand rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dark text-sm mb-0.5">Location</div>
+                            <div class="text-gray-500 text-sm">Chennai, Tamil Nadu</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-brand rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-dark text-sm mb-0.5">Working Hours</div>
+                            <div class="text-gray-500 text-sm">Mon – Sat: 9:00 AM – 7:00 PM</div>
+                            <div class="text-gray-500 text-sm">Sunday: 10:00 AM – 4:00 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Form -->
+            <div class="bg-dark rounded-2xl p-7 md:p-10 fade-in">
+                <h3 class="font-oswald font-bold text-white text-2xl uppercase mb-1">Book a Service</h3>
+                <div class="h-1 w-12 bg-brand rounded mb-8"></div>
+
+                <form id="booking-form" class="space-y-5" onsubmit="submitForm(event)">
+                    <div>
+                        <label class="block text-gray-400 text-xs font-semibold mb-2 uppercase tracking-wider">Your Name *</label>
+                        <input type="text" name="name" placeholder="Enter your name" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs font-semibold mb-2 uppercase tracking-wider">Phone Number *</label>
+                        <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs font-semibold mb-2 uppercase tracking-wider">Service Required *</label>
+                        <select name="service" required class="form-input cursor-pointer">
+                            <option value="" disabled selected>Select a service</option>
+                            <option value="car-washing">Car Washing</option>
+                            <option value="underchasis">Underchasis Coating</option>
+                            <option value="silencer">Silencer Coating</option>
+                            <option value="ac-electrical">AC, Electrical & Mechanical</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs font-semibold mb-2 uppercase tracking-wider">Car Model</label>
+                        <input type="text" name="car" placeholder="e.g. Maruti Swift, Hyundai i20..." class="form-input">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs font-semibold mb-2 uppercase tracking-wider">Message (Optional)</label>
+                        <textarea name="message" rows="3" placeholder="Any additional details..." class="form-input resize-none"></textarea>
+                    </div>
+                    <button id="submit-btn" type="submit"
+                            class="w-full bg-brand hover:bg-orange-600 text-white font-oswald font-bold text-lg uppercase tracking-wide py-4 rounded-lg transition-colors">
+                        Submit Enquiry
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer class="bg-darker border-t border-gray-800 pt-14 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+            <!-- Brand -->
+            <div class="lg:col-span-2">
+                <a href="#home" class="inline-flex items-center gap-3 mb-5">
+                    <img src="assets/logo-white.png" alt="Namma Pattarai"
+                         class="h-12 w-auto"
+                         onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='flex'">
+                    <div id="footer-logo-fallback" class="hidden flex-col leading-none">
+                        <span class="font-oswald text-brand font-bold text-2xl tracking-wide">NAMMA</span>
+                        <span class="font-oswald text-white font-bold text-2xl tracking-wide">PATTARAI</span>
+                    </div>
+                </a>
+                <p class="text-gray-500 text-sm leading-relaxed max-w-xs">
+                    Your trusted car care partner in Chennai. Professional services, quality products, transparent pricing.
+                </p>
+                <!-- Social icons -->
+                <div class="flex gap-3 mt-6">
+                    <a href="#" aria-label="Facebook"
+                       class="w-9 h-9 bg-gray-800 hover:bg-brand rounded-full flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram"
+                       class="w-9 h-9 bg-gray-800 hover:bg-brand rounded-full flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/919876543210" aria-label="WhatsApp"
+                       class="w-9 h-9 bg-gray-800 hover:bg-[#25D366] rounded-full flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="font-oswald font-bold text-white text-base uppercase tracking-wide mb-5">Quick Links</h4>
+                <ul class="space-y-2.5">
+                    <li><a href="#home"        class="text-gray-500 hover:text-brand transition text-sm">Home</a></li>
+                    <li><a href="#services"    class="text-gray-500 hover:text-brand transition text-sm">Services</a></li>
+                    <li><a href="#accessories" class="text-gray-500 hover:text-brand transition text-sm">Accessories</a></li>
+                    <li><a href="#why-us"      class="text-gray-500 hover:text-brand transition text-sm">Why Choose Us</a></li>
+                    <li><a href="#contact"     class="text-gray-500 hover:text-brand transition text-sm">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div>
+                <h4 class="font-oswald font-bold text-white text-base uppercase tracking-wide mb-5">Services</h4>
+                <ul class="space-y-2.5">
+                    <li><a href="#services" class="text-gray-500 hover:text-brand transition text-sm">Car Washing</a></li>
+                    <li><a href="#services" class="text-gray-500 hover:text-brand transition text-sm">Underchasis Coating</a></li>
+                    <li><a href="#services" class="text-gray-500 hover:text-brand transition text-sm">Silencer Coating</a></li>
+                    <li><a href="#services" class="text-gray-500 hover:text-brand transition text-sm">AC & Electrical</a></li>
+                    <li><a href="#accessories" class="text-gray-500 hover:text-brand transition text-sm">All Accessories</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="border-t border-gray-800 pt-7 flex flex-col md:flex-row items-center justify-between gap-3">
+            <p class="text-gray-600 text-xs">© 2026 Namma Pattarai. All rights reserved.</p>
+            <p class="text-gray-600 text-xs">Made with ♥ in Chennai</p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/919876543210" class="wa-fab" aria-label="Chat on WhatsApp" title="WhatsApp us">
+    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+</a>
+
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════ -->
+<script>
+    /* ── mobile menu ── */
+    function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const hb1  = document.getElementById('hb1');
+        const hb2  = document.getElementById('hb2');
+        const hb3  = document.getElementById('hb3');
+        const open = menu.classList.toggle('hidden') === false;
+        hb1.style.transform  = open ? 'rotate(45deg) translateY(8px)'  : '';
+        hb2.style.opacity    = open ? '0' : '1';
+        hb3.style.transform  = open ? 'rotate(-45deg) translateY(-8px)' : '';
+    }
+
+    /* close mobile menu on outside click */
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('mobile-menu');
+        const btn  = document.getElementById('ham-btn');
+        if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
+            menu.classList.add('hidden');
+            document.getElementById('hb1').style.transform = '';
+            document.getElementById('hb2').style.opacity   = '1';
+            document.getElementById('hb3').style.transform = '';
+        }
+    });
+
+    /* ── navbar shadow on scroll ── */
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').style.boxShadow =
+            window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,.5)' : 'none';
+    });
+
+    /* ── scroll animations ── */
+    const observer = new IntersectionObserver(
+        (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ── form submission ── */
+    function submitForm(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        btn.textContent = 'Sending…';
+        btn.disabled    = true;
+        btn.classList.replace('bg-brand', 'bg-gray-600');
+
+        /* Replace this timeout with a real fetch() to your backend/WhatsApp API */
+        setTimeout(() => {
+            btn.textContent = '✓ We\'ll contact you shortly!';
+            btn.classList.replace('bg-gray-600', 'bg-green-600');
+            document.getElementById('booking-form').reset();
+            setTimeout(() => {
+                btn.textContent = 'Submit Enquiry';
+                btn.classList.replace('bg-green-600', 'bg-brand');
+                btn.disabled = false;
+            }, 3500);
+        }, 1200);
+    }
+</script>
+</body>
+</html>
