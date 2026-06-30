@@ -101,6 +101,69 @@
                       position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
                       transition: width .08s linear; }
 
+        /* ── offer popup ── */
+        #offer-overlay {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(0,0,0,.78);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0; pointer-events: none;
+            transition: opacity .4s ease;
+        }
+        #offer-overlay.active { opacity: 1; pointer-events: auto; }
+        #offer-modal {
+            position: relative;
+            width: min(420px, 92vw);
+            max-height: 92vh;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #111;
+            box-shadow: 0 24px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(241,90,36,.25);
+            transform: scale(.9) translateY(16px);
+            transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+        }
+        #offer-overlay.active #offer-modal { transform: scale(1) translateY(0); }
+        .offer-slide { display: none; }
+        .offer-slide.active { display: block; }
+        .offer-slide img { width: 100%; display: block; }
+        #offer-close {
+            position: absolute; top: 12px; right: 12px; z-index: 10;
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(0,0,0,.65); border: 1.5px solid rgba(255,255,255,.25);
+            color: #fff; font-size: 18px; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: background .2s, transform .2s;
+        }
+        #offer-close:hover { background: #F15A24; transform: scale(1.1); }
+        .offer-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(0,0,0,.55); border: 1.5px solid rgba(255,255,255,.2);
+            color: #fff; font-size: 20px; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10; transition: background .2s;
+        }
+        .offer-nav:hover { background: #F15A24; }
+        #offer-prev { left: 10px; }
+        #offer-next { right: 10px; }
+        #offer-dots {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 6px; z-index: 10;
+        }
+        .offer-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: rgba(255,255,255,.35); cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+        .offer-dot.active { background: #F15A24; transform: scale(1.3); }
+        #offer-badge {
+            position: absolute; top: 0; left: 0; right: 0; z-index: 9;
+            text-align: center; padding: 7px 12px;
+            background: linear-gradient(135deg, #F15A24, #c0391a);
+            font-family: 'Oswald', sans-serif; font-size: 11px;
+            font-weight: 600; letter-spacing: .1em; color: #fff; text-transform: uppercase;
+        }
+
         /* ── logo entrance ── */
         @keyframes logoSlide { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } }
         .logo-img { animation: logoSlide .65s ease forwards; }
@@ -169,6 +232,30 @@
 </head>
 <body class="antialiased bg-white text-gray-900">
 <div id="scroll-bar"></div>
+
+<!-- ── Offer Popup ── -->
+<div id="offer-overlay">
+    <div id="offer-modal">
+        <div id="offer-badge">Inaugural Offer &nbsp;·&nbsp; Jul 05 – Aug 15, 2026</div>
+
+        <button id="offer-close" aria-label="Close">&#x2715;</button>
+
+        <button class="offer-nav" id="offer-prev" aria-label="Previous">&#8249;</button>
+        <button class="offer-nav" id="offer-next" aria-label="Next">&#8250;</button>
+
+        <div class="offer-slide active">
+            <img src="assets/Namma%20Pattarai_A5%20flyer.png" alt="Inaugural Offer – Coating Packages" loading="eager">
+        </div>
+        <div class="offer-slide">
+            <img src="assets/Namma%20Pattarai_A5%20flyer_02.png" alt="Affordable Combo Offer" loading="eager">
+        </div>
+
+        <div id="offer-dots">
+            <span class="offer-dot active"></span>
+            <span class="offer-dot"></span>
+        </div>
+    </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════
      NAVBAR
@@ -1088,6 +1175,42 @@
         window.open(`https://wa.me/919840442673?text=${encodeURIComponent(text)}`, '_blank');
         form.reset();
     }
+
+    // ── Offer popup ──
+    (function() {
+        const EXPIRY = new Date('2026-08-15T23:59:59');
+        if (new Date() > EXPIRY) return;
+
+        const overlay  = document.getElementById('offer-overlay');
+        const slides   = document.querySelectorAll('.offer-slide');
+        const dots     = document.querySelectorAll('.offer-dot');
+        let current = 0, timer;
+
+        function goTo(n) {
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = (n + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            clearInterval(timer);
+        }
+
+        document.getElementById('offer-close').addEventListener('click', closePopup);
+        document.getElementById('offer-prev').addEventListener('click', () => goTo(current - 1));
+        document.getElementById('offer-next').addEventListener('click', () => goTo(current + 1));
+        dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closePopup(); });
+
+        // Show after 1.2s, auto-advance every 4s
+        setTimeout(() => {
+            overlay.classList.add('active');
+            timer = setInterval(() => goTo(current + 1), 4000);
+        }, 1200);
+    })();
 </script>
 </body>
 </html>
